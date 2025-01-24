@@ -1,0 +1,47 @@
+Funktionsweise
+Das Skript liest RFID-Karten und führt Aktionen auf Spotify aus, wie:
+
+Wiedergabe steuern: Play, Pause, Skip, Zurück
+Lautstärke regeln: Lauter, Leiser
+Musik abspielen: Tracks, Alben, Playlists
+Steuerung über RFID
+Spotify-URI: Jede RFID-Karte kann einem spezifischen Spotify-Track, -Album oder -Playlist zugeordnet werden.
+Kontrollbefehle: Karten können auch Befehle wie pause, resume, skip, back, volume_up, und volume_down enthalten, um die Wiedergabe zu steuern.
+Installation
+Spotify Developer Account: Erstelle ein Spotify Developer-Konto, wenn du noch keines hast, und registriere eine Anwendung, um deine CLIENT_ID und CLIENT_SECRET zu erhalten. Diese Werte müssen im Skript angegeben werden.
+
+Einrichtung des RFID-Lesers: Schließe den MFRC522 RFID-Leser an deinen Raspberry Pi an. Die Pinbelegung des RFID-Lesers muss in der mfrc522-Bibliothek korrekt konfiguriert sein.
+
+Verbindung zu deinem Spotify-Konto: Das Skript verwendet OAuth, um Zugriff auf dein Spotify-Konto zu erhalten. Beim ersten Ausführen des Skripts wirst du aufgefordert, dich bei Spotify anzumelden und Zugriff zu gewähren.
+
+Konfiguration: Trage deine DEVICE_ID, CLIENT_ID, CLIENT_SECRET und die MAC-Adresse deines Spotify-Geräts in das Skript ein. Die MAC-Adresse ist erforderlich, um das Gerät über Wake-on-LAN zu wecken, falls es nicht aktiv ist.
+
+Führe das Skript aus:
+
+bash
+Kopieren
+Bearbeiten
+python3 rfid_spotify_controller.py
+Beispiel für eine RFID-Datenbank
+Die RFID-Datenbank im Skript (rfid_to_spotify) enthält Zuordnungen von RFID-Karten zu Spotify-URI-Strings oder Steuerbefehlen:
+
+python
+Kopieren
+Bearbeiten
+rfid_to_spotify = {
+    '1234567890': 'spotify:track:2vSLxBSZoK0eha4AuhZlXV',  # Beispiel für Track
+    '9876543210': 'control:pause',  # Pausieren
+    '1122334455': 'control:skip',   # Nächster Track
+    '6677889900': 'control:volume_up',   # Lauter
+}
+Beispiel für Befehle
+Spotify-URI: 'spotify:track:2vSLxBSZoK0eha4AuhZlXV' (Startet den Track mit der angegebenen URI)
+Steuerbefehle:
+control:pause → Pausiert die Wiedergabe
+control:resume → Setzt die Wiedergabe fort
+control:skip → Überspringt zum nächsten Track
+control:back → Geht zum vorherigen Track
+control:volume_up → Erhöht die Lautstärke
+control:volume_down → Verringert die Lautstärke
+
+
